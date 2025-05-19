@@ -159,8 +159,6 @@ void loop() {
 
     display.clearDisplay();
     display.setCursor(10, 10);
-    //int y=analogRead(VRY);
-    //int x=analogRead(VRX);
 
     display.fillRect(0, 50, 128, 22, 1);
     display.setCursor(3, 55);
