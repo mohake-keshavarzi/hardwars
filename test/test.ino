@@ -38,13 +38,17 @@ Adafruit_SH1106G display = Adafruit_SH1106G(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, 
 #define YPOS 1
 #define DELTAY 2
 
+#define VRY 26
+#define VRX 25
+#define PUSH 27
+
 
 #define LOGO16_GLCD_HEIGHT 16
 #define LOGO16_GLCD_WIDTH  16
 
 void setup()   {
-
-  // Serial.begin(9600);
+  pinMode(PUSH, INPUT_PULLUP);
+  Serial.begin(115200);
 
   delay(250); // wait for the OLED to power up
   display.begin(i2c_Address, true); 
@@ -63,12 +67,31 @@ void setup()   {
   delay(2000);
   display.clearDisplay();
   display.display();
-
+  display.setTextSize(3);                 // Size can be 1, 2, 3, ...
+  display.setTextColor(SH110X_WHITE);
 
 }
 
 
 void loop() {
+  display.clearDisplay();
+  display.setCursor(10, 10);
+  int y=analogRead(VRY);
+  int x=analogRead(VRX);
+
+  display.print("X:");
+  display.println(x);
+  display.print("Y:");
+  display.println(y);
+  if(!digitalRead(PUSH)){
+    display.invertDisplay(true);
+  }else
+    display.invertDisplay(false);
+    
+  display.display();
+
+  delay(200);
+
 
 }
 
